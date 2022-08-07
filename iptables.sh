@@ -149,13 +149,3 @@ done
 
 # Add Parsed Argument to args
 set -- "${args[@]}"
-
-: <<'CHAIN'
-Chain Port for file:
-for x in `cat table` ;  do sudo iptables -t filter -A INPUT -p tcp --dport $x -j ACCEPT ; done
-
-Chain Port with dumped sql data :
-mysql -B --column-names=0 -uroot -p123 --database DBNAME -e "SELECT PORT FROM PortFiltering;" > iptable
-for ips in `cat iptable` ;  do sudo iptables -t filter -A INPUT -p tcp --dport $ips -j ACCEPT ; done
-rm -rf iptable
-CHAIN
